@@ -15,6 +15,7 @@ from mltools.mltools.plotting import plot_corr_heatmaps, plot_multi_hists, quant
 from mltools.mltools.torch_utils import to_np
 from mltools.mltools.transformers import TransformerVectorEncoder
 
+import traceback
 
 class NuFlows(LightningModule):
     """Transformer based conditional normalising flow for neutrino unfolding."""
@@ -157,8 +158,10 @@ class NuFlows(LightningModule):
 
     def _shared_step(self, sample: tuple, flag: str) -> T.Tensor:
         """Shared step for training and validation."""
+
         # Unpack the sample
-        inputs, targets, _weights = sample
+        #inputs, targets, _weights = sample
+        inputs, targets = sample
 
         # Get the context and the flattened targets
         ctxt = self.get_context(inputs)
