@@ -54,7 +54,16 @@ def main(cfg: DictConfig) -> None:
         model_class = hydra.utils.get_class(cfg.model._target_)
         model = model_class.load_from_checkpoint(cfg.ckpt_path, map_location="cpu")
     else:
-        model = hydra.utils.instantiate(cfg.model, **datamodule.model_kwargs)
+        #model = hydra.utils.instantiate(cfg.model, **datamodule.model_kwargs)
+        model = hydra.utils.instantiate(cfg.model, 
+                input_dimensions = datamodule.input_dimensions(),
+                target_dimensions = datamodule.target_dimensions(),
+                embed_config = cfg.model.embed_config,
+                transformer_config = cfg.model.transformer_config,
+                flow_config = cfg.model.flow_config,
+                scheduler = cfg.model.scheduler,
+                optimizer = cfg.model.optimizer,
+                gen_validation =cfg.model.gen_validation)
 
     if cfg.compile:
         log.info(f"Compiling the model using torch 2.0: {cfg.compile}")
