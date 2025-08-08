@@ -17,14 +17,14 @@ transformer_config:
     num_registers: 2
     layer_config:
       num_heads: 8
-      layerscale_init: 0.1
+        #layerscale_init: 0.1
   classattention_config:
     dim: 128
     num_layers: 2
     do_final_norm: True
     layer_config:
       num_heads: 4
-      layerscale_init: null # Don't layerscale a cross attention block!
+        #layerscale_init: null # Don't layerscale a cross attention block!
 
 flow_config:
   num_stacks: 10
